@@ -2,7 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Poppins,sans-serif;  
+    font-family: montserrat, sans-serif;
+    font-weight: 400; 
   }
 
 
@@ -30,7 +31,7 @@
     
     @media screen and (max-width: 800px) {
     .hero{
-    padding: 0 5%;
+    padding: 0 7%;
     }
     }
 
