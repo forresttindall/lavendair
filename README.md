@@ -1,113 +1,110 @@
-# Lavendair
+# Lavendair - Developer Documentation
 
-A modern air quality monitoring dashboard built with React and Vite. Monitor environmental sensors in real-time, visualize air quality data, and manage sensor networks with an intuitive web interface.
+Internal development documentation for the Lavendair air quality monitoring platform. This React/Vite application provides real-time sensor data visualization and management capabilities.
 
-## Features
+## Architecture Overview
 
-- **Real-time Air Quality Monitoring** - Track PM1.0, PM2.5, and PM10 particulate matter levels
-- **Interactive Data Visualization** - Beautiful charts and graphs using Recharts
-- **Multi-sensor Management** - Monitor multiple air quality sensors from a centralized dashboard
-- **Historical Data Analysis** - View trends over 24 hours, 7 days, or 30 days
-- **PurpleAir Integration** - Connect to PurpleAir sensor network via API
-- **Firebase Authentication** - Secure user authentication and admin panel
-- **Data Export** - Export sensor data in various formats
-- **Responsive Design** - Works seamlessly on desktop and mobile devices
-- **Admin Panel** - Administrative controls for user and sensor management
-- **Contact System** - Built-in contact form with EmailJS integration
+- **Frontend Framework**: React 19 with Vite build system
+- **State Management**: React Context API for authentication, local state for components
+- **Data Layer**: Mock data generation with PurpleAir API integration
+- **Authentication**: Firebase Auth with development bypass
+- **Styling**: Tailwind CSS with responsive design patterns
+- **Charts**: Recharts library for data visualization
+- **Routing**: React Router DOM with protected routes
 
-## Quick Start
+## Development Setup
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
-- Firebase account (for authentication)
-- PurpleAir API key (optional, for real sensor data)
+- Node.js (v18+ recommended)
+- npm or yarn package manager
+- Git for version control
+- Firebase project (for production auth)
+- Code editor with ESLint support
 
-### Installation
+### Local Development
 
-1. **Clone the repository**
+1. **Clone and setup**
    ```bash
    git clone <repository-url>
    cd lavendair
-   ```
-
-2. **Install dependencies**
-   ```bash
    npm install
    ```
 
-3. **Set up environment variables**
+2. **Environment configuration**
    ```bash
    cp .env.example .env
    ```
    
-   Edit `.env` with your configuration:
+   **Development mode**: Use the dev bypass (no Firebase required)
    ```env
-   # Firebase Configuration
-   VITE_FIREBASE_API_KEY=your_firebase_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-   VITE_FIREBASE_PROJECT_ID=your-project-id
-   VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-   VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
-   VITE_FIREBASE_APP_ID=1:123456789:web:abcdef123456
-   
-   # Development Login (Optional)
+   # Development Login
    VITE_DEV_EMAIL=dev@lavendair.com
    VITE_DEV_PASSWORD=dev123
    ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
+   
+   **Production mode**: Configure Firebase
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=project.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=project-id
+   # ... other Firebase config
    ```
 
-5. **Open your browser**
-   Navigate to `http://localhost:5173`
+3. **Start development server**
+   ```bash
+   npm run dev
+   # Server runs on http://localhost:5173
+   ```
 
-## Configuration
+### Development Workflow
 
-### Firebase Setup
+- Use the "Dev" login button for quick access during development
+- Mock data is generated automatically for all sensor readings
+- Hot reload is enabled for all React components
+- ESLint runs automatically on save
 
-For detailed Firebase configuration instructions, see [FIREBASE_SETUP.md](./FIREBASE_SETUP.md).
+## Code Architecture
 
-### PurpleAir API Integration
+### Authentication System
 
-1. Get your PurpleAir API key from [PurpleAir](https://www2.purpleair.com/)
-2. Configure the API key in the Settings page of the application
-3. Add your sensor IDs to connect real sensors
+- **AuthContext**: Centralized auth state management
+- **Development Bypass**: Quick login without Firebase for development
+- **Protected Routes**: Route guards in App.jsx
+- **Firebase Integration**: Production authentication via Firebase Auth
 
-## Usage
+### Data Management
 
-### Authentication
+- **Mock Data Generation**: Realistic sensor data with time-based patterns
+- **PurpleAir Service**: API integration for real sensor data
+- **State Management**: Local component state with React hooks
+- **Data Patterns**: Rush hour spikes, weekend variations, seasonal trends
 
-- **Admin Login**: Use Firebase admin credentials
-- **Development Login**: Click "🛠️ Dev" button (no Firebase required)
-- **Regular Users**: Create account or use existing Firebase users
+### Component Structure
 
-### Dashboard Features
+#### Pages
+- `Dashboard.jsx`: Main data visualization with Recharts
+- `Sensors.jsx`: Sensor CRUD operations and individual data views
+- `Settings.jsx`: Configuration management
+- `Login.jsx`: Authentication interface
+- `Exports.jsx`: Data export functionality
 
-- **Sensor Overview**: View all connected sensors and their status
-- **Real-time Data**: Monitor current air quality readings
-- **Historical Charts**: Analyze trends over different time periods
-- **AQI Color Coding**: Visual indicators for air quality levels
-  - Green: Good (0-12 μg/m³)
-  - Yellow: Moderate (13-35 μg/m³)
-  - Orange: Unhealthy for Sensitive Groups (36-55 μg/m³)
-  - Red: Unhealthy (56+ μg/m³)
+#### Components
+- `Navbar.jsx`: Navigation with auth state
+- `AdminPanel.jsx`: Administrative controls
+- `Contact.jsx`: EmailJS integration
 
-### Sensor Management
+#### Services
+- `purpleAirService.js`: External API integration
+- `exportService.js`: Data export utilities
 
-- Add, edit, and delete sensors
-- Configure sensor locations and calibration factors
-- View individual sensor data with detailed charts
-- Monitor sensor connectivity status
+### Key Technical Features
 
-### Data Export
-
-- Export historical data in CSV format
-- Schedule automated exports
-- Integration with Eagle.io platform
+- **Responsive Design**: Tailwind CSS with mobile-first approach
+- **Chart Visualization**: Recharts with custom styling
+- **Date Handling**: date-fns for time manipulation
+- **HTTP Client**: Axios with interceptors
+- **Icon System**: Lucide React icons
 
 ## Technology Stack
 
@@ -150,83 +147,154 @@ lavendair/
 └── README.md           # This file
 ```
 
-## Development
+## Development Guidelines
 
-### Available Scripts
+### Build Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- `npm run dev` - Development server with hot reload
+- `npm run build` - Production build with optimization
+- `npm run preview` - Test production build locally
+- `npm run lint` - ESLint code quality checks
 
-### Mock Data
+### Code Standards
 
-The application includes realistic mock data for development and testing:
-- Simulated sensor readings with daily/weekly patterns
-- Rush hour pollution spikes
-- Weekend vs weekday variations
-- Seasonal trends
+- **React Patterns**: Functional components with hooks
+- **State Management**: useState/useEffect for local state, Context for global
+- **Styling**: Tailwind utility classes, responsive design patterns
+- **File Organization**: Feature-based structure in src/
+- **Naming**: PascalCase for components, camelCase for functions/variables
 
-### Adding New Sensors
+### Mock Data Implementation
 
-1. Navigate to the Sensors page
-2. Click "Add Sensor"
-3. Fill in sensor details:
-   - Name and location
-   - PurpleAir sensor ID (if using real sensors)
-   - Calibration factor
-   - Description
+```javascript
+// generateMockData function creates realistic patterns
+const generateMockData = (days, metric) => {
+  // Time-based pollution patterns
+  // Rush hour spikes (7-9 AM, 5-7 PM)
+  // Weekend vs weekday variations
+  // Seasonal baseline adjustments
+};
+```
+
+### Adding New Features
+
+1. **New Pages**: Add to `src/pages/` and update routing in `App.jsx`
+2. **Components**: Create in `src/components/` with proper prop types
+3. **Services**: Add API integrations to `src/services/`
+4. **State**: Use Context for global state, local state for component-specific data
+
+### Testing Approach
+
+- Manual testing with mock data
+- Development login bypass for quick iteration
+- Responsive design testing across breakpoints
+- Chart functionality with different data ranges
 
 ## Deployment
 
-### Build for Production
+### Production Build
 
 ```bash
+# Create optimized production build
 npm run build
+
+# Test production build locally
+npm run preview
 ```
 
-### Deploy to Firebase Hosting
+### Environment Configuration
 
-1. Install Firebase CLI: `npm install -g firebase-tools`
-2. Login: `firebase login`
-3. Initialize: `firebase init hosting`
-4. Deploy: `firebase deploy`
+**Production Environment Variables:**
+```env
+# Firebase (Required for production auth)
+VITE_FIREBASE_API_KEY=prod_api_key
+VITE_FIREBASE_AUTH_DOMAIN=prod-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=prod-project-id
 
-### Environment Variables for Production
+# Optional integrations
+VITE_PURPLEAIR_API_KEY=api_key
+VITE_EMAILJS_SERVICE_ID=service_id
+```
 
-Ensure all environment variables are properly set in your production environment:
-- Firebase configuration
-- PurpleAir API credentials
-- EmailJS service configuration
+### Deployment Options
+
+1. **Firebase Hosting**
+   ```bash
+   firebase deploy
+   ```
+
+2. **Static Hosting** (Vercel, Netlify)
+   - Build command: `npm run build`
+   - Output directory: `dist`
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -am 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Submit a pull request
+### Development Workflow
+
+1. **Setup development environment**
+   ```bash
+   git checkout -b feature/feature-name
+   npm install
+   npm run dev
+   ```
+
+2. **Code standards**
+   - Follow existing component patterns
+   - Use Tailwind for styling
+   - Implement responsive design
+   - Add proper error handling
+
+3. **Testing checklist**
+   - Test with mock data
+   - Verify responsive design
+   - Check authentication flows
+   - Validate chart functionality
+
+4. **Submit changes**
+   ```bash
+   git commit -m "feat: add new feature"
+   git push origin feature/feature-name
+   # Create pull request
+   ```
+
+## Technical Notes
+
+### Known Issues
+
+- Mock data generation can be CPU intensive for large date ranges
+- Chart re-rendering may cause brief loading states
+- Firebase auth state persistence requires page refresh in some cases
+
+### Performance Considerations
+
+- Recharts lazy loading for large datasets
+- Debounced API calls in PurpleAir service
+- Memoized components for chart rendering
+- Tailwind CSS purging for smaller bundle size
+
+## Development Roadmap
+
+### Immediate (Current Sprint)
+- [ ] Optimize chart rendering performance
+- [ ] Add unit tests for core components
+- [ ] Improve error boundary implementation
+
+### Short Term
+- [ ] WebSocket integration for real-time data
+- [ ] Advanced data filtering and aggregation
+- [ ] Component library documentation
+- [ ] API rate limiting implementation
+
+### Long Term
+- [ ] PWA capabilities
+- [ ] Advanced analytics dashboard
+- [ ] Multi-tenant architecture
+- [ ] GraphQL API layer
 
 ## License
 
 This project is copyrighted. All rights reserved.
 
-## Support
-
-For support and questions:
-- Check the [Firebase Setup Guide](./FIREBASE_SETUP.md)
-- Review the troubleshooting section in the Firebase setup
-- Open an issue on GitHub
-
-## Roadmap
-
-- [ ] Real-time notifications for air quality alerts
-- [ ] Mobile app development
-- [ ] Advanced analytics and ML predictions
-- [ ] Integration with more sensor networks
-- [ ] Weather data correlation
-- [ ] Public API for data access
-
 ---
 
-**Lavendair** - Making air quality data accessible and actionable for everyone.
+**Internal Development Documentation** - Lavendair Platform
